@@ -47,21 +47,24 @@ public static class SafeDial
 
         var absRawValue = int.Abs(rawNewValue) % (MaxValue + 1);
 
-        double totalClicks = (Convert.ToDouble(absRawValue) / Convert.ToDouble(MaxValue));
+        // Hier gaat het mis 0.05 is niet altijd 1
+        double totalClicks = (currentValue == 0 && valueToSubtract < MaxValue)
+            ? 0
+            : (Convert.ToDouble(int.Abs(rawNewValue)) / Convert.ToDouble(MaxValue + 1));
 
         if (absRawValue == 0)
         {
             return new DialResult
             {
                 NewPosition = 0,
-                TotalClicks = 1
+                TotalClicks = Convert.ToInt32(Math.Ceiling(totalClicks))
             };
         }
 
         return new DialResult
         {
-            NewPosition = currentValue,
-            TotalClicks = Convert.ToInt32(Math.Floor(totalClicks))
+            NewPosition = MaxValue - (absRawValue - 1),
+            TotalClicks = Convert.ToInt32(Math.Ceiling(totalClicks))
         };
 
     }

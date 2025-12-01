@@ -1,8 +1,8 @@
-﻿using AdventOfCodeCSharp.Day01;
+﻿namespace AOCTests.Day01;
 
-namespace AOCTests.Day01;
+using AdventOfCodeCSharp.Day01;
 
-public class SafeDialTests
+public class BruteForceSafeDialTests
 {
     [Theory]
     [InlineData(0, 50, 50, 0)]
@@ -19,9 +19,9 @@ public class SafeDialTests
     [InlineData(52, 48, 0, 1)]
     [InlineData(50, 1000, 50, 10)]
     [InlineData(95, 60, 55, 1)]
-    public void DialToRightTests(int currentValue, int valueToAdd, int expectedNewPosition, int expectedClicks)
+    public void BFDialToRightTests(int currentValue, int valueToAdd, int expectedNewPosition, int expectedClicks)
     {
-        var result = SafeDial.DialToRight(currentValue, valueToAdd);
+        var result = BruteForceSafeDial.DialToRight(currentValue, valueToAdd);
 
         Assert.Equal(expectedNewPosition, result.NewPosition);
         Assert.Equal(expectedClicks, result.TotalClicks);
@@ -38,11 +38,12 @@ public class SafeDialTests
     [InlineData(30, 290, 40, 3)]
     [InlineData(50, 1000, 50, 10)]
     [InlineData(0, 5, 95, 0)]
-    public void DialToLeftTests(int currentValue, int valueToSubtract, int expectedNewPosition, int expectedClicks)
+    public void BFDialToLeftTests(int currentValue, int valueToSubtract, int expectedNewPosition, int expectedClicks)
     {
-        var result = SafeDial.DialToLeft(currentValue, valueToSubtract);
+        var result = BruteForceSafeDial.DialToLeft(currentValue, valueToSubtract);
 
         Assert.Equal(expectedNewPosition, result.NewPosition);
         Assert.Equal(expectedClicks, result.TotalClicks);
     }
 }
+
