@@ -5,31 +5,64 @@ public static class SafeDial
     const int MinValue = 0;
     const int MaxValue = 99;
 
-    public static int DialToRight(int currentValue, int valueToAdd)
+    public static DialResult DialToRight(int currentValue, int valueToAdd)
     {
         var rawNewValue = currentValue + valueToAdd; // Can be more than allowed
 
         // Happy flow - not rotated
-        if (rawNewValue <= MaxValue) return rawNewValue;
+        if (rawNewValue <= MaxValue)
+        {
+            return new DialResult
+            {
+                NewPosition = rawNewValue,
+                TotalClicks = 0 // Correct
+            };
+        }
+
+        double totalClicks = (Convert.ToDouble(rawNewValue) / Convert.ToDouble(MaxValue));
 
         // Edge case what if it is more
-        return rawNewValue % (MaxValue + 1);
+        return new DialResult
+        {
+            NewPosition = rawNewValue % (MaxValue + 1),
+            TotalClicks = Convert.ToInt32(Math.Floor(totalClicks))
+        };
     }
 
-    public static int DialToLeft(int currentValue, int valueToSubtract)
+    public static DialResult DialToLeft(int currentValue, int valueToSubtract)
     {
         var rawNewValue = currentValue - valueToSubtract;
-        
+
         // Happy flow within range
-        if (rawNewValue >= MinValue) return rawNewValue;
+        if (rawNewValue >= MinValue)
+        {
+            return new DialResult
+            {
+                NewPosition = rawNewValue,
+                TotalClicks = rawNewValue == 0 ? 1 : 0
+            };
+        }
 
         // 20 - 170 = -150
 
         var absRawValue = int.Abs(rawNewValue) % (MaxValue + 1);
 
-        if (absRawValue == 0) return 0;
+        double totalClicks = (Convert.ToDouble(absRawValue) / Convert.ToDouble(MaxValue));
 
-        return MaxValue - (absRawValue - 1);
+        if (absRawValue == 0)
+        {
+            return new DialResult
+            {
+                NewPosition = 0,
+                TotalClicks = 1
+            };
+        }
+
+        return new DialResult
+        {
+            NewPosition = currentValue,
+            TotalClicks = Convert.ToInt32(Math.Floor(totalClicks))
+        };
 
     }
 
@@ -68,4 +101,10 @@ public enum RotationDirection {
     Left,
     Right,
     Unknown
+}
+
+public record DialResult
+{
+    public int NewPosition { get; set; }
+    public int TotalClicks { get; set; }
 }

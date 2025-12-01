@@ -19,18 +19,17 @@ public class Day01
 
             if (parsedLine.Direction == RotationDirection.Left)
             {
-                currentPosition = SafeDial.DialToLeft(currentPosition, parsedLine.DialSize);
+                var dialResult = SafeDial.DialToLeft(currentPosition, parsedLine.DialSize);
+                currentNumberOfZeros += dialResult.TotalClicks;
+                currentPosition = dialResult.NewPosition;
             } else if (parsedLine.Direction == RotationDirection.Right)
             {
-                currentPosition = SafeDial.DialToRight(currentPosition, parsedLine.DialSize);
+                var dialResult = SafeDial.DialToRight(currentPosition, parsedLine.DialSize);
+                currentNumberOfZeros += dialResult.TotalClicks;
+                currentPosition = dialResult.NewPosition;
             } else
             {
                 throw new Exception("INVALID INPUT");
-            }
-
-            if (currentPosition == 0) // Hard coded but who cares, me not haha
-            {
-                currentNumberOfZeros++;
             }
         }
 
