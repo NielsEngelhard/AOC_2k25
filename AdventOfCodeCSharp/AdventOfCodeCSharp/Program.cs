@@ -2,7 +2,7 @@
 
 Console.WriteLine("Starting Script");
 
-var result = new D5P1().Execute();
+var result = new D5P1().ExecuteP2();
 
 Console.WriteLine("Final Result: " + result);
 

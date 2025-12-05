@@ -2,6 +2,38 @@
 
 public static class FreshChecker
 {
+    public static long GetUniqueNumbersInRanges(IEnumerable<RangeRecord> ranges)
+    {
+        var uniqueNumbers = new HashSet<long>();
+
+        foreach (var range in ranges)
+        {
+            var numbersInRange = GetNumbersInRange(range);
+
+            foreach(var n in numbersInRange)
+            {
+                uniqueNumbers.Add(n);
+            }
+        }
+
+        return uniqueNumbers.Count;
+    }
+
+    public static IEnumerable<long> GetNumbersInRange(RangeRecord range)
+    {
+        var numbers = new List<long>();
+
+        var currentNumber = range.Start;
+
+        while(range.End+1 > currentNumber)
+        {
+            numbers.Add(currentNumber);
+            currentNumber++;
+        }
+
+        return numbers;
+    }
+
     public static bool IdIsInOneRange(IEnumerable<RangeRecord> ranges, long id)
     {
         foreach (RangeRecord range in ranges)

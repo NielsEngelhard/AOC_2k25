@@ -7,7 +7,8 @@ public class D5P1
     const string IdsFileName = "./Day05/real-input/ids.txt";
     const string RangesFileName = "./Day05/real-input/ranges.txt";
 
-    public long Execute()
+    // P1
+    public long ExecuteP1()
     {
         var ids = GetIds();
         var ranges = GetRanges();
@@ -25,6 +26,13 @@ public class D5P1
         }
 
         return total;
+    }
+
+    public long ExecuteP2()
+    {
+        var ranges = GetRanges();
+
+        return FreshChecker.GetUniqueNumbersInRanges(ranges);
     }
 
     public IEnumerable<long> GetIds()
