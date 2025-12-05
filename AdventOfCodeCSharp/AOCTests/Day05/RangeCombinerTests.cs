@@ -83,6 +83,18 @@ public class RangeCombinerTests
     }
 
     [Fact]
+    public void CombineRangesTests_SecondRangeCompletelyWithin()
+    {
+        var range1 = new RangeRecord { Start = 5, End = 100 };
+        var range2 = new RangeRecord { Start = 16, End = 22 };
+
+        var result = RangeCombiner.CombineRanges(range1, range2);
+
+        Assert.Equal(5, result.Start);
+        Assert.Equal(100, result.End);
+    }
+
+    [Fact]
     public void MergeOverlappingRangesTests()
     {
         var range1 = new RangeRecord { Start = 10, End = 20 };
@@ -141,7 +153,7 @@ public class RangeCombinerTests
     }
 
     [Fact]
-    public void CombineRanges_TheTestCasePlusStartExtra()
+    public void CombineRanges_TheTestCasePlusEndExtra_ONTHRESHOLD()
     {
         List<RangeRecord> ranges = [
             new RangeRecord { Start = 1, End = 2 },
@@ -152,6 +164,33 @@ public class RangeCombinerTests
         ];
 
         var combinedResult = RangeCombiner.MergeOverlappingRanges(ranges);
+
+        Assert.Equal(3, combinedResult.Count());
+
+        Assert.Equal(1, combinedResult[0].Start);
+        Assert.Equal(5, combinedResult[0].End);
+
+        Assert.Equal(5, combinedResult[1].Start);
+        Assert.Equal(100, combinedResult[1].End);
+
+        Assert.Equal(16, combinedResult[2].Start);
+        Assert.Equal(22, combinedResult[2].End);
+    }
+
+    [Fact]
+    public void CombineRanges_TheTestCasePlusStartExtra()
+    {
+        List<RangeRecord> ranges = [
+            new RangeRecord { Start = 1, End = 2 },
+            new RangeRecord { Start = 2, End = 5 },
+            new RangeRecord { Start = 5, End = 100 }, /*<-- dit scenario */
+            new RangeRecord { Start = 16, End = 20 },
+            new RangeRecord { Start = 21, End = 22 }
+        ];
+
+        var combinedResult = RangeCombiner.KeepIteratingUntillNoMore(ranges);
+
+        // 1 range van 1-100 dus 100
 
         Assert.Equal(1, combinedResult.Count());
 

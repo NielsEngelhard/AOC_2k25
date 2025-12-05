@@ -7,10 +7,9 @@ public static class FreshChecker
 {
     public static long SmartUniqueNumberFinder(IList<RangeRecord> rawRanges)
     {
-        var orderedRanges = rawRanges.OrderBy(r => r.Start).ToList();
-        var mergedRanges = RangeCombiner.MergeOverlappingRanges(orderedRanges);
+        var processedRanges = RangeCombiner.KeepIteratingUntillNoMore(rawRanges);
 
-        return CountDifferenceInRanges(mergedRanges);
+        return CountDifferenceInRanges(processedRanges);
     }
 
     public static long CountDifferenceInRanges(IList<RangeRecord> ranges)

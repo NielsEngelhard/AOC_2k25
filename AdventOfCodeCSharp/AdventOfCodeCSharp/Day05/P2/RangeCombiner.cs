@@ -4,6 +4,34 @@ namespace AdventOfCodeCSharp.Day05.P2;
 
 public class RangeCombiner
 {
+    public static IList<RangeRecord> KeepIteratingUntillNoMore(IList<RangeRecord> rawRanges)
+    {
+        //bool stop = false;
+        //int previousNRanges = -1;
+
+        //var currentRanges = rawRanges;
+
+        //while (!stop)
+        //{
+        //    var orderedRanges = currentRanges.OrderBy(r => r.Start).ToList();
+        //    currentRanges = RangeCombiner.MergeOverlappingRanges(orderedRanges);
+
+        //    if (currentRanges.Count() == previousNRanges)
+        //    {
+        //        stop = true;
+        //    }
+        //    else
+        //    {
+        //        previousNRanges = currentRanges.Count();
+        //    }
+        //}
+
+        var orderedRanges = rawRanges.OrderBy(r => r.Start).ToList();
+        var currentRanges = RangeCombiner.MergeOverlappingRanges(orderedRanges);
+
+        return currentRanges;
+    }
+
     // Step 2: Merge overlapping/adjacent ranges SOMEHOW?!
     public static IList<RangeRecord> MergeOverlappingRanges(IList<RangeRecord> sortedRanges)
     {
@@ -46,10 +74,14 @@ public class RangeCombiner
 
     public static RangeRecord CombineRanges(RangeRecord first, RangeRecord second)
     {
+        var endRange = second.End > first.End
+            ? second.End
+            : first.End;
+
         return new RangeRecord
         {
             Start = first.Start,
-            End = second.End
+            End = endRange
         };
     }
 
