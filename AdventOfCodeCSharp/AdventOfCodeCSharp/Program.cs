@@ -1,9 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-using AdventOfCodeCSharp.Day02;
+﻿using AdventOfCodeCSharp.Day05.P1;
 
 Console.WriteLine("Starting Script");
 
-var result = new Day02Part2().Execute();
+var result = new D5P1().Execute();
 
 Console.WriteLine("Final Result: " + result);
 
