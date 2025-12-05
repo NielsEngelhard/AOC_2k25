@@ -4,8 +4,10 @@ namespace AdventOfCodeCSharp.Day05.P1;
 
 public class D5P1
 {
-    const string IdsFileName = "./Day05/real-input/ids.txt";
-    const string RangesFileName = "./Day05/real-input/ranges.txt";
+    string basePath = AppDomain.CurrentDomain.BaseDirectory;
+
+    string IdsFileName => $"{basePath}/Day05/real-input/ids.txt";
+    string RangesFileName => $"{basePath}/Day05/real-input/ranges.txt";
 
     // P1
     public long ExecuteP1()
@@ -28,11 +30,12 @@ public class D5P1
         return total;
     }
 
+    // P2
     public long ExecuteP2()
     {
         var ranges = GetRanges();
 
-        return FreshChecker.GetUniqueNumbersInRanges(ranges);
+        return FreshChecker.SmartUniqueNumberFinder(ranges);
     }
 
     public IEnumerable<long> GetIds()
@@ -40,10 +43,10 @@ public class D5P1
         return File.ReadLines(IdsFileName).Select(long.Parse);
     }
 
-    public IEnumerable<RangeRecord> GetRanges()
+    public IList<RangeRecord> GetRanges()
     {
         return File.ReadLines(RangesFileName)
-            .Select(StringToRangeRecord);
+            .Select(StringToRangeRecord).ToList();
     }
 
     public RangeRecord StringToRangeRecord(string input)

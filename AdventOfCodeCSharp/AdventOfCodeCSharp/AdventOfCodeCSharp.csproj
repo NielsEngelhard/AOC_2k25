@@ -40,8 +40,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Day05\P2\" />
-  </ItemGroup>
-
 </Project>

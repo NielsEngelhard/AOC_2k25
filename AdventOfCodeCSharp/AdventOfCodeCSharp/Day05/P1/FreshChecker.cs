@@ -1,18 +1,53 @@
-﻿namespace AdventOfCodeCSharp.Day05.P1;
+﻿using AdventOfCodeCSharp.Day05.P2;
+using System;
+
+namespace AdventOfCodeCSharp.Day05.P1;
 
 public static class FreshChecker
 {
-    public static long GetUniqueNumbersInRanges(IEnumerable<RangeRecord> ranges)
+    public static long SmartUniqueNumberFinder(IList<RangeRecord> rawRanges)
+    {
+        var orderedRanges = rawRanges.OrderBy(r => r.Start).ToList();
+        var mergedRanges = RangeCombiner.MergeOverlappingRanges(orderedRanges);
+
+        return CountDifferenceInRanges(mergedRanges);
+    }
+
+    public static long CountDifferenceInRanges(IList<RangeRecord> ranges)
+    {
+        long count = 0;
+
+        foreach(var range in ranges)
+        {
+            var difference = range.End - range.Start + 1; // TODO: HIER KAN NOG WEL WAT ZITTEN QUA +1-1
+            count += difference;
+        }
+
+        return count;
+    }
+
+    // Brute force did not work. The first record resulted in 2.3 billion records
+    public static long GetUniqueNumbersInRanges(IList<RangeRecord> ranges, bool printStatus = true)
     {
         var uniqueNumbers = new HashSet<long>();
 
-        foreach (var range in ranges)
-        {
-            var numbersInRange = GetNumbersInRange(range);
+        var totalRanges = ranges.Count();
 
-            foreach(var n in numbersInRange)
+        for (var i=0; i<totalRanges; i++)
+        {
+            var range = ranges[i];
+
+            if (printStatus)
             {
-                uniqueNumbers.Add(n);
+                Console.WriteLine($"{i}/{totalRanges}");
+            }            
+
+            var currentNumber = range.Start;
+
+            while (range.End + 1 > currentNumber)
+            {
+                uniqueNumbers.Add(currentNumber);
+                currentNumber++;
             }
         }
 
