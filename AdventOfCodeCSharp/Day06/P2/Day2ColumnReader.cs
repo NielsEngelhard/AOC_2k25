@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
-
-namespace AdventOfCodeCSharp.Day06.P1;
+﻿namespace AdventOfCodeCSharp.Day06.P1;
 
 public class Day2ColumnReader
 {
@@ -134,28 +130,6 @@ public class Day2ColumnReader
         return true;
     }
 
-    public static string[] MapRowsToColumns(string[] rows)
-    {
-        var amountOfColumns = rows.First().Split().Count(x => !string.IsNullOrWhiteSpace(x));
-
-        string[] columns = new string[amountOfColumns];
-
-        for(var i=0; i<rows.Length; i++)
-        {
-            var rowItems = rows[i].Split().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-            
-            for(var j=0; j<amountOfColumns; j++)
-            {
-                var isLastItem = i == rows.Length - 1;
-                var lastChar = isLastItem ? "" : " ";
-                columns[j] += $"{rowItems[j]}{lastChar}";
-            }
-        }
-
-        return columns;
-    }
-
-
     public static long ProcessColumnLikeBefore(string[] rawColumn)
     {
         var firstSymbol = rawColumn[rawColumn.Length - 1];
@@ -164,30 +138,6 @@ public class Day2ColumnReader
         CountMode countMode = DetermineCountMode(firstSymbol);
 
         return ProcessNumbers([.. numbers.Select(long.Parse)], countMode);
-    }
-
-    public static string[] ConvertToRightToLeftColumn(string[] column)
-    {
-        var totalValues = column.OrderByDescending(o => o.Length).First().Length;
-
-        string[] convertedValues = new string[totalValues + 1]; // + 1 for identifier 
-
-        for (var i=0; i< totalValues; i++) // For each line
-        {
-            for (var j=0; j < column[i].Length; j++) // for each number in line kan niet 
-            {
-                var currentNumber = column[i][j];
-
-                var position = column[i].Length - j;
-
-                convertedValues[position] += currentNumber;
-            }
-        }
-
-        // Add last value - maar reversed dus aan het begin
-        convertedValues[0] = column[column.Length-1]; // Add the identifier e.g. *
-
-        return convertedValues.Reverse().ToArray();
     }
 
     public static long ProcessNumbers(long[] numbers, CountMode mode)
