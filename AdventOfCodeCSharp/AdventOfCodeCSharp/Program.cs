@@ -3,7 +3,7 @@ using AdventOfCodeCSharp.Day06.P1;
 
 Console.WriteLine("Starting Script");
 
-var result = D6P1.Execute();
+var result = D6P2.Execute();
 
 Console.WriteLine("Final Result: " + result);
 

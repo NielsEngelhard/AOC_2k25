@@ -79,8 +79,3 @@ public class ColumnReader
         };
     }
 }
-
-public enum CountMode {
-    Multiply,
-    Plus
-}

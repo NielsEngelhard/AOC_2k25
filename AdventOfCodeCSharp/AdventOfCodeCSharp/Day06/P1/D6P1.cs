@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCodeCSharp.Day06.P1;
+﻿namespace AdventOfCodeCSharp.Day06.P1;
 
 internal class D6P1
 {
