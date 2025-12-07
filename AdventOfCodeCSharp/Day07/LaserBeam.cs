@@ -13,7 +13,7 @@ public static class LaserBeam
     public static void ProcessBeamStreams(char[][] grid, Coordinate start)
     {
         var beamStreams = new Stack<BeamStream>();
-        beamStreams.Push(new(start.X, start.Y));
+        beamStreams.Push(new(start.X, start.Y, 1));
 
         while(beamStreams.Count > 0)
         {

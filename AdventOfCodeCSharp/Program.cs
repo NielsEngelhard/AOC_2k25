@@ -2,7 +2,7 @@
 
 Console.WriteLine("Starting Script");
 
-var result = D7P1.Execute();
+var result = D7P2.Execute();
 
 Console.WriteLine("Final Result: " + result);
 

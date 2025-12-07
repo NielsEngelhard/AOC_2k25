@@ -1,10 +1,8 @@
-﻿using AdventOfCodeCSharp.Day06.P1;
+﻿namespace AdventOfCodeCSharp.Day07;
 
-namespace AdventOfCodeCSharp.Day07;
-
-public static class D7P1
+public static class D7P2
 {
-    const string FileName = $"Day07/test-input.txt";
+    const string FileName = $"Day07/real-input.txt";
 
     public static long Execute()
     {
@@ -12,19 +10,19 @@ public static class D7P1
 
         PrintGrid(grid);
 
-        LaserBeam.Beam(grid);
+        BlockFaller.Beam(grid);
 
         return 0;
 
     }
 
-    public static char[][] GetGrid()
+    public static string[][] GetGrid()
     {
         var lines = File.ReadLines(FileName);
-        return lines.Select(l => l.ToCharArray()).ToArray();
+        return lines.Select(l => l.ToCharArray().Select(c => c.ToString()).ToArray()).ToArray();
     }
 
-    public static void PrintGrid(char[][] grid)
+    public static void PrintGrid(string[][] grid)
     {
         for (int y = 0; y < grid.Length; y++)
         {
