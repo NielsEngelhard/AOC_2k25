@@ -40,7 +40,7 @@ public static class BlockFaller
             // Dan is het sws een cijfer en dus een stream
             if (currentItem != "." && currentItem != "^" && currentItem != "S")// Lelijk hard code duplicate maarja boeie
             {
-                result.Add(new BeamStream(new Coordinate(x, y), int.Parse(currentItem)));
+                result.Add(new BeamStream(new Coordinate(x, y), long.Parse(currentItem)));
             }
         }
         return result;
@@ -81,7 +81,7 @@ public static class BlockFaller
             if (leftAlreadyContainsNumber)
             {
                 // OPTELLEN
-                var val = int.Parse(characterLeft);
+                var val = long.Parse(characterLeft);
                 grid[leftCoords.Y][leftCoords.X] = (val + beamStream.Value).ToString();
                 leftBeamStream.Value = val + beamStream.Value;
             } else
@@ -94,7 +94,7 @@ public static class BlockFaller
             if (rightAlreadyContainsNumber)
             {
                 // OPTELLEN
-                var val = int.Parse(characterRight);
+                var val = long.Parse(characterRight);
                 grid[rightCoords.Y][rightCoords.X] = (val + beamStream.Value).ToString();
                 rightBeamStream.Value = val + beamStream.Value;
             }
@@ -113,7 +113,7 @@ public static class BlockFaller
             } else
             {
                 // Bij elkaar optellen naar beneden toe ipv overschrijven
-                var currentValue = int.Parse(grid[downPosition.Y][downPosition.X]);
+                var currentValue = long.Parse(grid[downPosition.Y][downPosition.X]);
 
                 grid[downPosition.Y][downPosition.X] = (beamStream.Value + currentValue).ToString();
                 return [new(downPosition, beamStream.Value + currentValue)];
@@ -122,9 +122,9 @@ public static class BlockFaller
 
     }
 
-    public static int CountLastRowItems(string[][] grid)
+    public static long CountLastRowItems(string[][] grid)
     {
-        var result = 0;
+        long result = 0;
 
         var y = grid.Length - 1; // last row
 
@@ -135,7 +135,7 @@ public static class BlockFaller
             // Dan is het sws een cijfer en dus een stream
             if (currentItem != "." && currentItem != "^" && currentItem != "S")// Lelijk hard code duplicate maarja boeie
             {
-                result += int.Parse(currentItem);
+                result += long.Parse(currentItem);
             }
         }
         return result;

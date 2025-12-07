@@ -2,16 +2,16 @@
 
 public record BeamStream
 {
-    public int Value { get; set; }
+    public long Value { get; set; }
     public Coordinate CurrentCoordinate { get; set; }
 
-    public BeamStream(int x, int y, int value)
+    public BeamStream(int x, int y, long value)
     {
         CurrentCoordinate = new Coordinate(x, y);
         Value = value;
     }
 
-    public BeamStream(Coordinate coordinate, int value = 1)
+    public BeamStream(Coordinate coordinate, long value = 1)
     {
         CurrentCoordinate = coordinate;
         Value = value;
