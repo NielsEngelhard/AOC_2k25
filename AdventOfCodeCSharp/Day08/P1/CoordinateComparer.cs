@@ -4,6 +4,49 @@ public static class CoordinateComparer
 {
     const int Take = 1000;
 
+    // p2
+    public static long FindUntillLastIsConnected(IList<ThreeDCoords> coords)
+    {
+        var allDistances = MapAllDistancesBetweenCoords(coords);
+
+        var allSortedDistances = allDistances.OrderBy(d => d.Distance).ToList();
+
+        return KeepConnectingUntillAllInSameGroup(allSortedDistances, coords.Count);
+    }
+
+    public static long KeepConnectingUntillAllInSameGroup(IList<DistanceBetweenCoords> distances, int totalCoordinates)
+    {
+        var unionFind = new UnionFind(totalCoordinates + 1);
+
+        bool allConnected = false;
+
+        for (var i = 0; i < distances.Count; i++)
+        {
+            var distance = distances[i];
+
+            int id1 = distance.Coords[0].Id;
+            int id2 = distance.Coords[1].Id;
+
+            unionFind.Union(id1, id2);
+
+            allConnected = unionFind.AllConnected();
+
+            if (allConnected)
+            {
+                Console.WriteLine("last connect start = " + id1);
+                Console.WriteLine(distance.Coords[0].X + "," + distance.Coords[0].Y + "," + distance.Coords[0].Z);
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("last connect end = " + id2);
+                Console.WriteLine(distance.Coords[1].X + "," + distance.Coords[1].Y + "," + distance.Coords[1].Z);                
+                return distance.Coords[0].X * distance.Coords[1].X; // 8520040659
+            }
+        }
+
+        throw new Exception("All coordinates never connected end of list reached");
+    }
+
+
+    // P1
     public static long FindAllCoordinateGroups(IList<ThreeDCoords> coords)
     {
         var allDistances = MapAllDistancesBetweenCoords(coords);

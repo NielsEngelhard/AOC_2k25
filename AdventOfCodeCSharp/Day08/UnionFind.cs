@@ -5,6 +5,23 @@ public class UnionFind
     private int[] parent;
     private int[] rank;
 
+    // Small bug in this method because I use the 0 index as a dummy and ignore it, so only if 1 is different it is ok
+    public bool AllConnected()
+    {        
+        var firstParent = Find(1);
+
+        // Skip 0 index
+        for (var i =1; i< parent.Length; i++)
+        {
+            if (firstParent != Find(i))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public UnionFind(int size)
     {
         parent = new int[size];
