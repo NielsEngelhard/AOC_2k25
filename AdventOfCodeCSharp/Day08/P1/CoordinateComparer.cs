@@ -11,14 +11,12 @@ public static class CoordinateComparer
         // Only do it for the X lowest distances
         var lowestDistances = allDistances.OrderBy(d => d.Distance).Take(Take).ToList();
 
-        UnionFindDistances(lowestDistances, coords.Count);
-
-        return 10;
+        return UnionFindDistances(lowestDistances, coords.Count);
     }
 
     // https://www.geeksforgeeks.org/dsa/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/
     // Disjoint Set (Union-Find Data Structure)
-    public static void UnionFindDistances(IList<DistanceBetweenCoords> distances, int totalCoordinates)
+    public static long UnionFindDistances(IList<DistanceBetweenCoords> distances, int totalCoordinates)
     {
         var unionFind = new UnionFind(totalCoordinates + 1);
 
@@ -33,7 +31,7 @@ public static class CoordinateComparer
         }
 
         // Get all groups
-        var groups = Enumerable.Range(0, totalCoordinates)
+        var groups = Enumerable.Range(1, totalCoordinates)
             .GroupBy(i => unionFind.Find(i))
             .Select(g => g.ToList())
             .OrderByDescending(g => g.Count)
@@ -45,8 +43,7 @@ public static class CoordinateComparer
             .Select(g => g.Count)
             .Aggregate((a, b) => a * b);
 
-        // 56916
-        Console.WriteLine("Multiplied result: " + multipliedTopThreeResult);
+        return multipliedTopThreeResult;
     }
 
     public static IList<DistanceBetweenCoords> MapAllDistancesBetweenCoords(IList<ThreeDCoords> coords)

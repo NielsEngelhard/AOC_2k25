@@ -1,8 +1,8 @@
-﻿using AdventOfCodeCSharp.Day07;
+﻿using AdventOfCodeCSharp.Day08.P1;
 
 Console.WriteLine("Starting Script");
 
-var result = D7P2.Execute();
+var result = D8P1.Execute();
 
 Console.WriteLine("Final Result: " + result);
 

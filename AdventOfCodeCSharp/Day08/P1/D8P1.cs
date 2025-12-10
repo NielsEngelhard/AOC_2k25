@@ -7,9 +7,7 @@ public static class D8P1
     public static long Execute()
     {
         var input = GetInput();
-        var coordGroups = CoordinateComparer.FindAllCoordinateGroups(input);
-
-        return 0;
+        return CoordinateComparer.FindAllCoordinateGroups(input);
     }
 
     public static IList<ThreeDCoords> GetInput()
