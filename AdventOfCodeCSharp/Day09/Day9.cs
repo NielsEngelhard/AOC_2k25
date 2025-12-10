@@ -15,6 +15,8 @@ public class Day9
         MarkRedTiles(inputGrid, inputCoords);
         PrintGrid(inputGrid);
 
+        FirstTryPatternFinder.FindPatterns(inputGrid);
+
         return 10;
     }
 
